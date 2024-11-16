@@ -1,0 +1,127 @@
+{
+    "name": "NextGen Training Center",
+    "logo": {
+        "Type": "Logo",
+        "name": "NextGen Training Logo",
+        "description": "A stylized icon representing growth paired with the text 'NextGen' in modern typography."
+    },
+    "sections": [
+        {
+            "title": "Unlock Your Future with NextGen",
+            "subtitle": "Empower Your Skills Today",
+            "name": "hero_section",
+            "label": "Home",
+            "content": "Welcome to **NextGen Training Center**, where innovation meets skill development. Dive into our wide variety of courses designed to unlock your potential and shape your future.",
+            "order": 1,
+            "Type": "Hero",
+            "images": [
+                {
+                    "Type": "Hero",
+                    "name": "Training Hero Image",
+                    "description": "A diverse group of individuals engaged in a dynamic training session."
+                }
+            ]
+        },
+        {
+            "title": "About Us",
+            "subtitle": "Our Mission",
+            "name": "about_section",
+            "label": "About",
+            "content": "At **NextGen Training Center**, we're committed to providing comprehensive and accessible education tailored to today\u2019s fast-evolving job market. Our mission is to empower individuals by developing their skills and enhancing their career potential.",
+            "order": 2,
+            "Type": "About",
+            "images": [
+                {
+                    "Type": "Background",
+                    "name": "About Background Image",
+                    "description": "A calming and professional image representing growth and learning."
+                }
+            ]
+        },
+        {
+            "title": "Our Services",
+            "subtitle": "Tailored Learning Pathways",
+            "name": "services_section",
+            "label": "Services",
+            "content": "- **Online Courses**: Flexible learning with our extensive library of online content across various industries.\n- **In-person Workshops**: Utilize hands-on experience with industry experts.\n- **Corporate Training Programs**: Tailored solutions to upskill your team.",
+            "order": 3,
+            "Type": "Services",
+            "images": [
+                {
+                    "Type": "Gallery",
+                    "name": "Training Services Gallery",
+                    "description": "Images showing various training sessions and corporate workshops."
+                }
+            ]
+        },
+        {
+            "title": "Meet Our Team",
+            "subtitle": "Experts in the Field",
+            "name": "team_section",
+            "label": "Team",
+            "content": "Our trainers are industry veterans with a passion for teaching. Meet some of our key team members:\n\n- **Jane Doe**: Lead Trainer in Digital Marketing\n- **John Smith**: Software Development Specialist\n- **Alice Johnson**: Corporate Training Coordinator",
+            "order": 4,
+            "Type": "Team",
+            "images": [
+                {
+                    "Type": "Headshot",
+                    "name": "Team Headshot 1",
+                    "description": "Image of Jane Doe, Digital Marketing Trainer."
+                },
+                {
+                    "Type": "Headshot",
+                    "name": "Team Headshot 2",
+                    "description": "Image of John Smith, Software Development Specialist."
+                }
+            ]
+        },
+        {
+            "title": "What Our Students Say",
+            "subtitle": "Testimonials",
+            "name": "testimonials_section",
+            "label": "Testimonials",
+            "content": "\"NextGen has transformed my career! The courses are well-structured and the instructors are top-notch.\" - **Alex P.**\n\n\"I appreciated the flexibility and the detailed curriculum. Highly recommend!\" - **Monica R.**",
+            "order": 5,
+            "Type": "Testimonials",
+            "images": [
+                {
+                    "Type": "Testimonial",
+                    "name": "Student Testimonial Image",
+                    "description": "Photo of Alex P., a satisfied student."
+                }
+            ]
+        },
+        {
+            "title": "Get In Touch",
+            "subtitle": "We\u2019re Here to Help",
+            "name": "contact_section",
+            "label": "Contact",
+            "content": "Whether you have questions, need advice, or are ready to enroll, we\u2019re here to assist you.\n\n**Email**: contact@nextgentraining.com\n\n**Phone**: +123-456-7890\n\n**Visit Us**: 123 Innovation Drive, Suite 100, Skills City",
+            "order": 6,
+            "Type": "Contact",
+            "images": [
+                {
+                    "Type": "Map",
+                    "name": "Location Map",
+                    "description": "A map depicting the location of NextGen Training Center."
+                }
+            ]
+        },
+        {
+            "title": "Stay Connected",
+            "subtitle": "",
+            "name": "footer_section",
+            "label": "Footer",
+            "content": "Connect with us on social media:\n\n- **Facebook**: [NextGen Training Center](#)\n- **LinkedIn**: [NextGen Training](#)\n- **Instagram**: [@nextgentraining](#)\n\nLegal Policies | Terms of Service | Privacy Policy",
+            "order": 7,
+            "Type": "Footer",
+            "images": [
+                {
+                    "Type": "Icon",
+                    "name": "Social Media Icons",
+                    "description": "Icons for Facebook, LinkedIn, and Instagram."
+                }
+            ]
+        }
+    ]
+}

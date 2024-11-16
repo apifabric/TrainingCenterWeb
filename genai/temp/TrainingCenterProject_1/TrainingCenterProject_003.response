@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Center",
+            "code": "class Center(Base):\n    \"\"\"description: Represents a training center.\"\"\"\n\n    __tablename__ = 'centers'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    location = Column(String)\n\n    def __repr__(self):\n        return f\"<Center(name={self.name}, location={self.location})>\"",
+            "description": "Represents a training center.",
+            "name": "Center"
+        },
+        {
+            "classname": "Course",
+            "code": "class Course(Base):\n    \"\"\"description: Represents a course offered by the training center.\"\"\"\n\n    __tablename__ = 'courses'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    description = Column(String)\n    duration_weeks = Column(Integer)\n    center_id = Column(Integer, ForeignKey('centers.id'))\n\n    def __repr__(self):\n        return f\"<Course(name={self.name}, duration_weeks={self.duration_weeks}, center_id={self.center_id})>\"",
+            "description": "Represents a course offered by the training center.",
+            "name": "Course"
+        },
+        {
+            "classname": "Instructor",
+            "code": "class Instructor(Base):\n    \"\"\"description: Represents an instructor who teaches courses.\"\"\"\n\n    __tablename__ = 'instructors'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    hire_date = Column(DateTime)\n    center_id = Column(Integer, ForeignKey('centers.id'))\n\n    def __repr__(self):\n        return f\"<Instructor(first_name={self.first_name}, last_name={self.last_name}, hire_date={self.hire_date})>\"",
+            "description": "Represents an instructor who teaches courses.",
+            "name": "Instructor"
+        },
+        {
+            "classname": "Student",
+            "code": "class Student(Base):\n    \"\"\"description: Represents a student attending courses.\"\"\"\n\n    __tablename__ = 'students'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    enrollment_date = Column(DateTime)\n    center_id = Column(Integer, ForeignKey('centers.id'))\n\n    def __repr__(self):\n        return f\"<Student(first_name={self.first_name}, last_name={self.last_name}, enrollment_date={self.enrollment_date})>\"",
+            "description": "Represents a student attending courses.",
+            "name": "Student"
+        },
+        {
+            "classname": "CourseAssignment",
+            "code": "class CourseAssignment(Base):\n    \"\"\"description: Represents the assignment of instructors to courses.\"\"\"\n\n    __tablename__ = 'course_assignments'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    instructor_id = Column(Integer, ForeignKey('instructors.id'))\n    assign_date = Column(DateTime)\n\n    def __repr__(self):\n        return f\"<CourseAssignment(course_id={self.course_id}, instructor_id={self.instructor_id}, assign_date={self.assign_date})>\"",
+            "description": "Represents the assignment of instructors to courses.",
+            "name": "CourseAssignment"
+        },
+        {
+            "classname": "Enrollment",
+            "code": "class Enrollment(Base):\n    \"\"\"description: Represents student enrollment in courses.\"\"\"\n\n    __tablename__ = 'enrollments'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    student_id = Column(Integer, ForeignKey('students.id'))\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    enrollment_date = Column(DateTime, nullable=False)\n\n    def __repr__(self):\n        return f\"<Enrollment(student_id={self.student_id}, course_id={self.course_id}, enrollment_date={self.enrollment_date})>\"",
+            "description": "Represents student enrollment in courses.",
+            "name": "Enrollment"
+        },
+        {
+            "classname": "Attendance",
+            "code": "class Attendance(Base):\n    \"\"\"description: Represents student attendance per course session.\"\"\"\n\n    __tablename__ = 'attendances'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    student_id = Column(Integer, ForeignKey('students.id'))\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    session_date = Column(DateTime, nullable=False)\n    is_present = Column(Boolean, nullable=False)\n\n    def __repr__(self):\n        return f\"<Attendance(student_id={self.student_id}, course_id={self.course_id}, session_date={self.session_date}, is_present={self.is_present})>\"",
+            "description": "Represents student attendance per course session.",
+            "name": "Attendance"
+        },
+        {
+            "classname": "Feedback",
+            "code": "class Feedback(Base):\n    \"\"\"description: Stores feedback from students about courses.\"\"\"\n\n    __tablename__ = 'feedbacks'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    student_id = Column(Integer, ForeignKey('students.id'))\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    date_submitted = Column(DateTime, nullable=False)\n    rating = Column(Integer)\n    comments = Column(String)\n\n    def __repr__(self):\n        return f\"<Feedback(student_id={self.student_id}, course_id={self.course_id}, date_submitted={self.date_submitted}, rating={self.rating})>\"",
+            "description": "Stores feedback from students about courses.",
+            "name": "Feedback"
+        },
+        {
+            "classname": "Session",
+            "code": "class Session(Base):\n    \"\"\"description: Represents a teaching session for a course.\"\"\"\n\n    __tablename__ = 'sessions'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    session_date = Column(DateTime, nullable=False)\n    duration_hours = Column(Integer, nullable=False)\n\n    def __repr__(self):\n        return f\"<Session(course_id={self.course_id}, session_date={self.session_date}, duration_hours={self.duration_hours})>\"",
+            "description": "Represents a teaching session for a course.",
+            "name": "Session"
+        },
+        {
+            "classname": "Skill",
+            "code": "class Skill(Base):\n    \"\"\"description: Represents a skill taught in the training center.\"\"\"\n\n    __tablename__ = 'skills'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n\n    def __repr__(self):\n        return f\"<Skill(name={self.name})>\"",
+            "description": "Represents a skill taught in the training center.",
+            "name": "Skill"
+        },
+        {
+            "classname": "CourseSkill",
+            "code": "class CourseSkill(Base):\n    \"\"\"description: Represents a connection between courses and skills taught.\"\"\"\n\n    __tablename__ = 'course_skills'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    course_id = Column(Integer, ForeignKey('courses.id'))\n    skill_id = Column(Integer, ForeignKey('skills.id'))\n\n    def __repr__(self):\n        return f\"<CourseSkill(course_id={self.course_id}, skill_id={self.skill_id})>\"",
+            "description": "Represents a connection between courses and skills taught.",
+            "name": "CourseSkill"
+        },
+        {
+            "classname": "StudentSkill",
+            "code": "class StudentSkill(Base):\n    \"\"\"description: Represents a student's skill records.\"\"\"\n\n    __tablename__ = 'student_skills'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    student_id = Column(Integer, ForeignKey('students.id'))\n    skill_id = Column(Integer, ForeignKey('skills.id'))\n    proficiency_level = Column(Integer)\n\n    def __repr__(self):\n        return f\"<StudentSkill(student_id={self.student_id}, skill_id={self.skill_id}, proficiency_level={self.proficiency_level})>\"",
+            "description": "Represents a student's skill records.",
+            "name": "StudentSkill"
+        }
+    ],
+    "rules": [],
+    "test_data": "from datetime import date\n\n# Centers\ncenter1 = Center(name=\"Downtown Train Center\", location=\"Downtown\")\ncenter2 = Center(name=\"Suburban Train Center\", location=\"Suburbs\")\ncenter3 = Center(name=\"Campus Train Center\", location=\"Campus\")\ncenter4 = Center(name=\"City Train Center\", location=\"City\")\n\n# Courses\ncourse1 = Course(name=\"Intro to Programming\", description=\"Basic programming concepts.\", duration_weeks=5, center_id=1)\ncourse2 = Course(name=\"Data Science 101\", description=\"Introduction to data science.\", duration_weeks=10, center_id=2)\ncourse3 = Course(name=\"Advanced AI\", description=\"Deep dive into AI techniques.\", duration_weeks=12, center_id=1)\ncourse4 = Course(name=\"Web Development\", description=\"Frontend and backend web development.\", duration_weeks=8, center_id=3)\n\n# Instructors\ninstructor1 = Instructor(first_name=\"John\", last_name=\"Doe\", hire_date=date(2020, 1, 15), center_id=1)\ninstructor2 = Instructor(first_name=\"Jane\", last_name=\"Smith\", hire_date=date(2018, 6, 20), center_id=2)\ninstructor3 = Instructor(first_name=\"Alice\", last_name=\"Johnson\", hire_date=date(2019, 3, 10), center_id=3)\ninstructor4 = Instructor(first_name=\"Bob\", last_name=\"Williams\", hire_date=date(2021, 11, 5), center_id=1)\n\n# Students\nstudent1 = Student(first_name=\"Michael\", last_name=\"Chen\", enrollment_date=date(2023, 8, 14), center_id=1)\nstudent2 = Student(first_name=\"Emily\", last_name=\"Clark\", enrollment_date=date(2023, 8, 14), center_id=2)\nstudent3 = Student(first_name=\"Liam\", last_name=\"Brown\", enrollment_date=date(2023, 8, 14), center_id=3)\nstudent4 = Student(first_name=\"Sophia\", last_name=\"Turner\", enrollment_date=date(2023, 8, 14), center_id=1)\n\n# Course Assignments\nassignment1 = CourseAssignment(course_id=1, instructor_id=1, assign_date=date(2023, 8, 1))\nassignment2 = CourseAssignment(course_id=2, instructor_id=2, assign_date=date(2023, 8, 2))\nassignment3 = CourseAssignment(course_id=3, instructor_id=3, assign_date=date(2023, 8, 3))\nassignment4 = CourseAssignment(course_id=4, instructor_id=4, assign_date=date(2023, 8, 4))\n\n# Enrollments\nenrollment1 = Enrollment(student_id=1, course_id=1, enrollment_date=date(2023, 8, 15))\nenrollment2 = Enrollment(student_id=2, course_id=2, enrollment_date=date(2023, 8, 16))\nenrollment3 = Enrollment(student_id=3, course_id=3, enrollment_date=date(2023, 8, 17))\nenrollment4 = Enrollment(student_id=4, course_id=4, enrollment_date=date(2023, 8, 18))\n\n# Attendance\nattendance1 = Attendance(student_id=1, course_id=1, session_date=date(2023, 8, 20), is_present=True)\nattendance2 = Attendance(student_id=2, course_id=2, session_date=date(2023, 8, 21), is_present=False)\nattendance3 = Attendance(student_id=3, course_id=3, session_date=date(2023, 8, 22), is_present=True)\nattendance4 = Attendance(student_id=4, course_id=4, session_date=date(2023, 8, 23), is_present=True)\n\n# Feedback\nfeedback1 = Feedback(student_id=1, course_id=1, date_submitted=date(2023, 8, 25), rating=5, comments=\"Excellent course\")\nfeedback2 = Feedback(student_id=2, course_id=2, date_submitted=date(2023, 8, 26), rating=4, comments=\"Very informative\")\nfeedback3 = Feedback(student_id=3, course_id=3, date_submitted=date(2023, 8, 27), rating=3, comments=\"Good\")\nfeedback4 = Feedback(student_id=4, course_id=4, date_submitted=date(2023, 8, 28), rating=5, comments=\"Outstanding\")\n\n# Sessions\nsession1 = Session(course_id=1, session_date=date(2023, 8, 20), duration_hours=3)\nsession2 = Session(course_id=2, session_date=date(2023, 8, 21), duration_hours=3)\nsession3 = Session(course_id=3, session_date=date(2023, 8, 22), duration_hours=3)\nsession4 = Session(course_id=4, session_date=date(2023, 8, 23), duration_hours=3)\n\n# Skills\nskill1 = Skill(name=\"Programming Basics\")\nskill2 = Skill(name=\"Machine Learning\")\nskill3 = Skill(name=\"Web Design\")\nskill4 = Skill(name=\"AI Advanced Concepts\")\n\n# Course Skills\ncourse_skill1 = CourseSkill(course_id=1, skill_id=1)\ncourse_skill2 = CourseSkill(course_id=2, skill_id=2)\ncourse_skill3 = CourseSkill(course_id=3, skill_id=4)\ncourse_skill4 = CourseSkill(course_id=4, skill_id=3)\n\n# Student Skills\nstudent_skill1 = StudentSkill(student_id=1, skill_id=1, proficiency_level=3)\nstudent_skill2 = StudentSkill(student_id=2, skill_id=2, proficiency_level=4)\nstudent_skill3 = StudentSkill(student_id=3, skill_id=3, proficiency_level=2)\nstudent_skill4 = StudentSkill(student_id=4, skill_id=4, proficiency_level=5)",
+    "name": "TrainingCenterProject"
+}

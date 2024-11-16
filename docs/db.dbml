@@ -1,0 +1,126 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Certificate: Represents a certificate issued upon course completion.
+Enrollment: Represents the enrollment of a student in a course.
+Course: Represents a course offered by the training center.
+Instructor: Represents an instructor who conducts courses.
+TrainingCenter: Represents a training center where courses are conducted.
+CourseMaterial: Represents materials related to a course.
+Student: Represents a student enrolled in courses.
+Evaluation: Represents an evaluation given to students upon course completion.
+Feedback: Represents feedback given by students for a course.
+InstructorAssignment: Represents the assignment of instructors to courses.
+Room: Represents a room allocated for training purposes.
+Schedule: Represents the schedule for course sessions.
+'''
+}
+
+Table Certificate {
+    id INTEGER [primary key]
+    enrollment_id INTEGER 
+    issue_date DATE 
+    certificate_type VARCHAR 
+    }
+
+Table Enrollment {
+    id INTEGER [primary key]
+    student_id INTEGER 
+    course_id INTEGER 
+    enrollment_date DATE 
+    }
+
+Table Course {
+    id INTEGER [primary key]
+    name VARCHAR 
+    training_center_id INTEGER 
+    start_date DATE 
+    end_date DATE 
+    total_hours INTEGER 
+    instructor_id INTEGER 
+    }
+
+Table Instructor {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    }
+
+Table TrainingCenter {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table CourseMaterial {
+    id INTEGER [primary key]
+    course_id INTEGER 
+    title VARCHAR 
+    material_type VARCHAR 
+    release_date DATE 
+    }
+
+Table Student {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    enrollment_date DATE 
+    }
+
+Table Evaluation {
+    id INTEGER [primary key]
+    course_id INTEGER 
+    student_id INTEGER 
+    evaluation_date DATE 
+    score INTEGER 
+    }
+
+Table Feedback {
+    id INTEGER [primary key]
+    course_id INTEGER 
+    student_id INTEGER 
+    feedback_text VARCHAR 
+    feedback_date DATE 
+    }
+
+Table InstructorAssignment {
+    id INTEGER [primary key]
+    instructor_id INTEGER 
+    course_id INTEGER 
+    assignment_date DATE 
+    }
+
+Table Room {
+    id INTEGER [primary key]
+    name VARCHAR 
+    capacity INTEGER 
+    }
+
+Table Schedule {
+    id INTEGER [primary key]
+    course_id INTEGER 
+    room_id INTEGER 
+    scheduled_date DATE 
+    start_time DATETIME 
+    end_time DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: Certificate.(enrollment_id) < Enrollment.(id)
+    Ref: Enrollment.(course_id) < Course.(id)
+    Ref: Enrollment.(student_id) < Student.(id)
+    Ref: Course.(instructor_id) < Instructor.(id)
+    Ref: Course.(training_center_id) < TrainingCenter.(id)
+    Ref: CourseMaterial.(course_id) < Course.(id)
+    Ref: Evaluation.(course_id) < Course.(id)
+    Ref: Evaluation.(student_id) < Student.(id)
+    Ref: Feedback.(course_id) < Course.(id)
+    Ref: Feedback.(student_id) < Student.(id)
+    Ref: InstructorAssignment.(course_id) < Course.(id)
+    Ref: InstructorAssignment.(instructor_id) < Instructor.(id)
+    Ref: Schedule.(course_id) < Course.(id)
+    Ref: Schedule.(room_id) < Room.(id)

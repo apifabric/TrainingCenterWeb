@@ -1,0 +1,148 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Instructor_form_edit" 
+        service="Instructor" 
+        entity="Instructor" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="COURSE-instructor_id">
+    <div layout-padding>
+      <o-table 
+        attr="CourseTable" 
+        service="Course" 
+        entity="Course" 
+        keys="id"
+        parent-keys="instructor_id:id"
+        columns="name;instructor_id;training_center_id;start_date;end_date;total_hours;id"  
+        horizontal-scroll="yes"
+        detail-form-route="Course" 
+        edit-form-route="Course"
+        visible-columns="name;instructor_id;training_center_id;start_date;end_date;total_hours;id"  
+        sort-columns="name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column attr="instructor_id" title="instructor_id">
+    <o-table-cell-renderer-service attr="instructor_id" 
+        service="Instructor" entity="InstructorType" columns="id;name"
+        parent-keys="id:instructor_id"
+        value-column="name" keys="instructor_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="training_center_id" title="training_center_id">
+    <o-table-cell-renderer-service attr="training_center_id" 
+        service="TrainingCenter" entity="TrainingCenterType" columns="id;name"
+        parent-keys="id:training_center_id"
+        value-column="name" keys="training_center_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #start_date attr="start_date" type="date" label="start_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #end_date attr="end_date" type="date" label="end_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #total_hours attr="total_hours" title="total_hours" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="INSTRUCTORASSIGNMENT-instructor_id">
+    <div layout-padding>
+      <o-table 
+        attr="InstructorAssignmentTable" 
+        service="InstructorAssignment" 
+        entity="InstructorAssignment" 
+        keys="id"
+        parent-keys="instructor_id:id"
+        columns="id;course_id;instructor_id;assignment_date"  
+        horizontal-scroll="yes"
+        detail-form-route="InstructorAssignment" 
+        edit-form-route="InstructorAssignment"
+        visible-columns="id;course_id;instructor_id;assignment_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="course_id" title="course_id">
+    <o-table-cell-renderer-service attr="course_id" 
+        service="Course" entity="CourseType" columns="id;name"
+        parent-keys="id:course_id"
+        value-column="name" keys="course_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="instructor_id" title="instructor_id">
+    <o-table-cell-renderer-service attr="instructor_id" 
+        service="Instructor" entity="InstructorType" columns="id;name"
+        parent-keys="id:instructor_id"
+        value-column="name" keys="instructor_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #assignment_date attr="assignment_date" type="date" label="assignment_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

@@ -1,0 +1,2 @@
+Error creating database from model: November 16, 2024 15:48:45
+Session.__init__() got an unexpected keyword argument 'course_id'

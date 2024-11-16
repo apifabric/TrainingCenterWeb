@@ -1,0 +1,396 @@
+about:
+  date: November 16, 2024 15:49:21
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 14
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Certificate:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: enrollment_id
+      required: true
+    - name: issue_date
+      required: true
+      type: DATE
+    - name: certificate_type
+    description: Represents a certificate issued upon course completion.
+    info_list: Represents a certificate issued upon course completion.
+    tab_groups:
+    - direction: toone
+      fks:
+      - enrollment_id
+      name: enrollment
+      resource: Enrollment
+    type: Certificate
+    user_key: id
+  Course:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: instructor_id
+    - name: training_center_id
+    - name: start_date
+      required: true
+      type: DATE
+    - name: end_date
+      required: true
+      type: DATE
+    - name: total_hours
+    - name: id
+    description: Represents a course offered by the training center.
+    info_list: Represents a course offered by the training center.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - course_id
+      name: CourseMaterialList
+      resource: CourseMaterial
+    - direction: tomany
+      fks:
+      - course_id
+      name: EnrollmentList
+      resource: Enrollment
+    - direction: tomany
+      fks:
+      - course_id
+      name: EvaluationList
+      resource: Evaluation
+    - direction: tomany
+      fks:
+      - course_id
+      name: FeedbackList
+      resource: Feedback
+    - direction: tomany
+      fks:
+      - course_id
+      name: InstructorAssignmentList
+      resource: InstructorAssignment
+    - direction: tomany
+      fks:
+      - course_id
+      name: ScheduleList
+      resource: Schedule
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - training_center_id
+      name: training_center
+      resource: TrainingCenter
+    type: Course
+    user_key: name
+  CourseMaterial:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: title
+      required: true
+    - name: material_type
+    - name: release_date
+      type: DATE
+    description: Represents materials related to a course.
+    info_list: Represents materials related to a course.
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    type: CourseMaterial
+    user_key: id
+  Enrollment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: student_id
+      required: true
+    - name: enrollment_date
+      required: true
+      type: DATE
+    description: Represents the enrollment of a student in a course.
+    info_list: Represents the enrollment of a student in a course.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - enrollment_id
+      name: CertificateList
+      resource: Certificate
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Enrollment
+    user_key: id
+  Evaluation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: student_id
+      required: true
+    - name: evaluation_date
+      required: true
+      type: DATE
+    - name: score
+    description: Represents an evaluation given to students upon course completion.
+    info_list: Represents an evaluation given to students upon course completion.
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Evaluation
+    user_key: id
+  Feedback:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: student_id
+      required: true
+    - name: feedback_text
+    - name: feedback_date
+      required: true
+      type: DATE
+    description: Represents feedback given by students for a course.
+    info_list: Represents feedback given by students for a course.
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Feedback
+    user_key: id
+  Instructor:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: id
+    description: Represents an instructor who conducts courses.
+    info_list: Represents an instructor who conducts courses.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: CourseList
+      resource: Course
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: InstructorAssignmentList
+      resource: InstructorAssignment
+    type: Instructor
+    user_key: name
+  InstructorAssignment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: instructor_id
+      required: true
+    - name: assignment_date
+      required: true
+      type: DATE
+    description: Represents the assignment of instructors to courses.
+    info_list: Represents the assignment of instructors to courses.
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    type: InstructorAssignment
+    user_key: id
+  Room:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: capacity
+      required: true
+    - name: id
+    description: Represents a room allocated for training purposes.
+    info_list: Represents a room allocated for training purposes.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - room_id
+      name: ScheduleList
+      resource: Schedule
+    type: Room
+    user_key: name
+  Schedule:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: course_id
+      required: true
+    - name: room_id
+      required: true
+    - name: scheduled_date
+      required: true
+      type: DATE
+    - name: start_time
+      required: true
+      type: DATETIME
+    - name: end_time
+      required: true
+      type: DATETIME
+    description: Represents the schedule for course sessions.
+    info_list: Represents the schedule for course sessions.
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - room_id
+      name: room
+      resource: Room
+    type: Schedule
+    user_key: id
+  Student:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: enrollment_date
+      required: true
+      type: DATE
+    - name: id
+    description: Represents a student enrolled in courses.
+    info_list: Represents a student enrolled in courses.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - student_id
+      name: EnrollmentList
+      resource: Enrollment
+    - direction: tomany
+      fks:
+      - student_id
+      name: EvaluationList
+      resource: Evaluation
+    - direction: tomany
+      fks:
+      - student_id
+      name: FeedbackList
+      resource: Feedback
+    type: Student
+    user_key: name
+  TrainingCenter:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Represents a training center where courses are conducted.
+    info_list: Represents a training center where courses are conducted.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - training_center_id
+      name: CourseList
+      resource: Course
+    type: TrainingCenter
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

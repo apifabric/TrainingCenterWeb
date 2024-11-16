@@ -1,0 +1,203 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Student_form_edit" 
+        service="Student" 
+        entity="Student" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-date-input #enrollment_date attr="enrollment_date" type="date" label="enrollment_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="ENROLLMENT-student_id">
+    <div layout-padding>
+      <o-table 
+        attr="EnrollmentTable" 
+        service="Enrollment" 
+        entity="Enrollment" 
+        keys="id"
+        parent-keys="student_id:id"
+        columns="id;course_id;student_id;enrollment_date"  
+        horizontal-scroll="yes"
+        detail-form-route="Enrollment" 
+        edit-form-route="Enrollment"
+        visible-columns="id;course_id;student_id;enrollment_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="course_id" title="course_id">
+    <o-table-cell-renderer-service attr="course_id" 
+        service="Course" entity="CourseType" columns="id;name"
+        parent-keys="id:course_id"
+        value-column="name" keys="course_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="student_id" title="student_id">
+    <o-table-cell-renderer-service attr="student_id" 
+        service="Student" entity="StudentType" columns="id;name"
+        parent-keys="id:student_id"
+        value-column="name" keys="student_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #enrollment_date attr="enrollment_date" type="date" label="enrollment_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="EVALUATION-student_id">
+    <div layout-padding>
+      <o-table 
+        attr="EvaluationTable" 
+        service="Evaluation" 
+        entity="Evaluation" 
+        keys="id"
+        parent-keys="student_id:id"
+        columns="id;course_id;student_id;evaluation_date;score"  
+        horizontal-scroll="yes"
+        detail-form-route="Evaluation" 
+        edit-form-route="Evaluation"
+        visible-columns="id;course_id;student_id;evaluation_date;score"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="course_id" title="course_id">
+    <o-table-cell-renderer-service attr="course_id" 
+        service="Course" entity="CourseType" columns="id;name"
+        parent-keys="id:course_id"
+        value-column="name" keys="course_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="student_id" title="student_id">
+    <o-table-cell-renderer-service attr="student_id" 
+        service="Student" entity="StudentType" columns="id;name"
+        parent-keys="id:student_id"
+        value-column="name" keys="student_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #evaluation_date attr="evaluation_date" type="date" label="evaluation_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #score attr="score" title="score" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FEEDBACK-student_id">
+    <div layout-padding>
+      <o-table 
+        attr="FeedbackTable" 
+        service="Feedback" 
+        entity="Feedback" 
+        keys="id"
+        parent-keys="student_id:id"
+        columns="id;course_id;student_id;feedback_text;feedback_date"  
+        horizontal-scroll="yes"
+        detail-form-route="Feedback" 
+        edit-form-route="Feedback"
+        visible-columns="id;course_id;student_id;feedback_text;feedback_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="course_id" title="course_id">
+    <o-table-cell-renderer-service attr="course_id" 
+        service="Course" entity="CourseType" columns="id;name"
+        parent-keys="id:course_id"
+        value-column="name" keys="course_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="student_id" title="student_id">
+    <o-table-cell-renderer-service attr="student_id" 
+        service="Student" entity="StudentType" columns="id;name"
+        parent-keys="id:student_id"
+        value-column="name" keys="student_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #feedback_text attr="feedback_text" title="feedback_text" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-date-input #feedback_date attr="feedback_date" type="date" label="feedback_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

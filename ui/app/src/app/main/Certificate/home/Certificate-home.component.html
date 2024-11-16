@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="Certificate" mode="tab" title="CERTIFICATE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CertificateTable" 
+            service="Certificate" 
+            entity="Certificate" 
+            title="CERTIFICATE"
+            keys="id"
+            columns="id;enrollment_id;issue_date;certificate_type" 
+            header-actions="R;D"
+            visible-columns="id;enrollment_id;issue_date;certificate_type"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="enrollment_id" title="enrollment_id">
+    <o-table-cell-renderer-service attr="enrollment_id" 
+        service="Enrollment" entity="EnrollmentType" columns="id;id"
+        parent-keys="id:enrollment_id"
+        value-column="id" keys="enrollment_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #issue_date attr="issue_date" type="date" label="issue_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #certificate_type attr="certificate_type" title="certificate_type" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

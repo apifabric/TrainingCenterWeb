@@ -1,0 +1,578 @@
+about:
+  date: November 16, 2024 15:49:21
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Certificate:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: enrollment_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: issue_date
+      required: true
+      type: DATE
+    - name: certificate_type
+      template: text
+      type: VARCHAR
+    description: Represents a certificate issued upon course completion.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a certificate issued upon course completion.
+    label: Certificate
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - enrollment_id
+      name: enrollment
+      resource: Enrollment
+    type: Certificate
+  Course:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: instructor_id
+      template: integer
+      type: INTEGER
+    - name: training_center_id
+      template: integer
+      type: INTEGER
+    - name: start_date
+      required: true
+      type: DATE
+    - name: end_date
+      required: true
+      type: DATE
+    - name: total_hours
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a course offered by the training center.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a course offered by the training center.
+    label: Course
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - course_id
+      name: CourseMaterialList
+      resource: CourseMaterial
+    - direction: tomany
+      fks:
+      - course_id
+      name: EnrollmentList
+      resource: Enrollment
+    - direction: tomany
+      fks:
+      - course_id
+      name: EvaluationList
+      resource: Evaluation
+    - direction: tomany
+      fks:
+      - course_id
+      name: FeedbackList
+      resource: Feedback
+    - direction: tomany
+      fks:
+      - course_id
+      name: InstructorAssignmentList
+      resource: InstructorAssignment
+    - direction: tomany
+      fks:
+      - course_id
+      name: ScheduleList
+      resource: Schedule
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    - direction: toone
+      fks:
+      - training_center_id
+      name: training_center
+      resource: TrainingCenter
+    type: Course
+  CourseMaterial:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: material_type
+      template: text
+      type: VARCHAR
+    - name: release_date
+      type: DATE
+    description: Represents materials related to a course.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents materials related to a course.
+    label: CourseMaterial
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    type: CourseMaterial
+  Enrollment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: student_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: enrollment_date
+      required: true
+      type: DATE
+    description: Represents the enrollment of a student in a course.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents the enrollment of a student in a course.
+    label: Enrollment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - enrollment_id
+      name: CertificateList
+      resource: Certificate
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Enrollment
+  Evaluation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: student_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: evaluation_date
+      required: true
+      type: DATE
+    - name: score
+      template: integer
+      type: INTEGER
+    description: Represents an evaluation given to students upon course completion.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents an evaluation given to students upon course completion.
+    label: Evaluation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Evaluation
+  Feedback:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: student_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: feedback_text
+      template: text
+      type: VARCHAR
+    - name: feedback_date
+      required: true
+      type: DATE
+    description: Represents feedback given by students for a course.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents feedback given by students for a course.
+    label: Feedback
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - student_id
+      name: student
+      resource: Student
+    type: Feedback
+  Instructor:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents an instructor who conducts courses.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents an instructor who conducts courses.
+    label: Instructor
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: CourseList
+      resource: Course
+    - direction: tomany
+      fks:
+      - instructor_id
+      name: InstructorAssignmentList
+      resource: InstructorAssignment
+    type: Instructor
+  InstructorAssignment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: instructor_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: assignment_date
+      required: true
+      type: DATE
+    description: Represents the assignment of instructors to courses.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents the assignment of instructors to courses.
+    label: InstructorAssignment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - instructor_id
+      name: instructor
+      resource: Instructor
+    type: InstructorAssignment
+  Room:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: capacity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a room allocated for training purposes.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a room allocated for training purposes.
+    label: Room
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - room_id
+      name: ScheduleList
+      resource: Schedule
+    type: Room
+  Schedule:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: course_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: room_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: scheduled_date
+      required: true
+      type: DATE
+    - name: start_time
+      required: true
+      type: DATETIME
+    - name: end_time
+      required: true
+      type: DATETIME
+    description: Represents the schedule for course sessions.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents the schedule for course sessions.
+    label: Schedule
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - course_id
+      name: course
+      resource: Course
+    - direction: toone
+      fks:
+      - room_id
+      name: room
+      resource: Room
+    type: Schedule
+  Student:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: enrollment_date
+      required: true
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a student enrolled in courses.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a student enrolled in courses.
+    label: Student
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - student_id
+      name: EnrollmentList
+      resource: Enrollment
+    - direction: tomany
+      fks:
+      - student_id
+      name: EvaluationList
+      resource: Evaluation
+    - direction: tomany
+      fks:
+      - student_id
+      name: FeedbackList
+      resource: Feedback
+    type: Student
+  TrainingCenter:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a training center where courses are conducted.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Represents a training center where courses are conducted.
+    label: TrainingCenter
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - training_center_id
+      name: CourseList
+      resource: Course
+    type: TrainingCenter
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

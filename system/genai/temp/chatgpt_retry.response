@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "TrainingCenter",
+            "code": "class TrainingCenter(Base):\n    \"\"\"description: Represents a training center where courses are conducted.\"\"\"\n\n    __tablename__ = 'training_center'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)",
+            "description": "Represents a training center where courses are conducted.",
+            "name": "TrainingCenter"
+        },
+        {
+            "classname": "Course",
+            "code": "class Course(Base):\n    \"\"\"description: Represents a course offered by the training center.\"\"\"\n\n    __tablename__ = 'course'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    training_center_id = Column(Integer, ForeignKey('training_center.id'))\n    start_date = Column(Date, nullable=False)\n    end_date = Column(Date, nullable=False)\n    total_hours = Column(Integer)\n    instructor_id = Column(Integer, ForeignKey('instructor.id'))",
+            "description": "Represents a course offered by the training center.",
+            "name": "Course"
+        },
+        {
+            "classname": "Instructor",
+            "code": "class Instructor(Base):\n    \"\"\"description: Represents an instructor who conducts courses.\"\"\"\n\n    __tablename__ = 'instructor'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    email = Column(String)",
+            "description": "Represents an instructor who conducts courses.",
+            "name": "Instructor"
+        },
+        {
+            "classname": "Student",
+            "code": "class Student(Base):\n    \"\"\"description: Represents a student enrolled in courses.\"\"\"\n\n    __tablename__ = 'student'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    email = Column(String)\n    enrollment_date = Column(Date, nullable=False)",
+            "description": "Represents a student enrolled in courses.",
+            "name": "Student"
+        },
+        {
+            "classname": "Enrollment",
+            "code": "class Enrollment(Base):\n    \"\"\"description: Represents the enrollment of a student in a course.\"\"\"\n\n    __tablename__ = 'enrollment'\n\n    id = Column(Integer, primary_key=True)\n    student_id = Column(Integer, ForeignKey('student.id'), nullable=False)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    enrollment_date = Column(Date, nullable=False)",
+            "description": "Represents the enrollment of a student in a course.",
+            "name": "Enrollment"
+        },
+        {
+            "classname": "Room",
+            "code": "class Room(Base):\n    \"\"\"description: Represents a room allocated for training purposes.\"\"\"\n\n    __tablename__ = 'room'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    capacity = Column(Integer, nullable=False)",
+            "description": "Represents a room allocated for training purposes.",
+            "name": "Room"
+        },
+        {
+            "classname": "Schedule",
+            "code": "class Schedule(Base):\n    \"\"\"description: Represents the schedule for course sessions.\"\"\"\n\n    __tablename__ = 'schedule'\n\n    id = Column(Integer, primary_key=True)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    room_id = Column(Integer, ForeignKey('room.id'), nullable=False)\n    scheduled_date = Column(Date, nullable=False)\n    start_time = Column(DateTime, nullable=False)\n    end_time = Column(DateTime, nullable=False)",
+            "description": "Represents the schedule for course sessions.",
+            "name": "Schedule"
+        },
+        {
+            "classname": "Feedback",
+            "code": "class Feedback(Base):\n    \"\"\"description: Represents feedback given by students for a course.\"\"\"\n\n    __tablename__ = 'feedback'\n\n    id = Column(Integer, primary_key=True)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    student_id = Column(Integer, ForeignKey('student.id'), nullable=False)\n    feedback_text = Column(String)\n    feedback_date = Column(Date, nullable=False)",
+            "description": "Represents feedback given by students for a course.",
+            "name": "Feedback"
+        },
+        {
+            "classname": "CourseMaterial",
+            "code": "class CourseMaterial(Base):\n    \"\"\"description: Represents materials related to a course.\"\"\"\n\n    __tablename__ = 'course_material'\n\n    id = Column(Integer, primary_key=True)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    title = Column(String, nullable=False)\n    material_type = Column(String)\n    release_date = Column(Date)",
+            "description": "Represents materials related to a course.",
+            "name": "CourseMaterial"
+        },
+        {
+            "classname": "Certificate",
+            "code": "class Certificate(Base):\n    \"\"\"description: Represents a certificate issued upon course completion.\"\"\"\n\n    __tablename__ = 'certificate'\n\n    id = Column(Integer, primary_key=True)\n    enrollment_id = Column(Integer, ForeignKey('enrollment.id'), nullable=False)\n    issue_date = Column(Date, nullable=False)\n    certificate_type = Column(String)",
+            "description": "Represents a certificate issued upon course completion.",
+            "name": "Certificate"
+        },
+        {
+            "classname": "Evaluation",
+            "code": "class Evaluation(Base):\n    \"\"\"description: Represents an evaluation given to students upon course completion.\"\"\"\n\n    __tablename__ = 'evaluation'\n\n    id = Column(Integer, primary_key=True)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    student_id = Column(Integer, ForeignKey('student.id'), nullable=False)\n    evaluation_date = Column(Date, nullable=False)\n    score = Column(Integer)",
+            "description": "Represents an evaluation given to students upon course completion.",
+            "name": "Evaluation"
+        },
+        {
+            "classname": "InstructorAssignment",
+            "code": "class InstructorAssignment(Base):\n    \"\"\"description: Represents the assignment of instructors to courses.\"\"\"\n\n    __tablename__ = 'instructor_assignment'\n\n    id = Column(Integer, primary_key=True)\n    instructor_id = Column(Integer, ForeignKey('instructor.id'), nullable=False)\n    course_id = Column(Integer, ForeignKey('course.id'), nullable=False)\n    assignment_date = Column(Date, nullable=False)",
+            "description": "Represents the assignment of instructors to courses.",
+            "name": "InstructorAssignment"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Test Data Creation\n\nfrom datetime import date\n\n# Training Centers\ntraining_center_1 = TrainingCenter(id=1, name='Tech Academy')\ntraining_center_2 = TrainingCenter(id=2, name='Global Training Center')\ntraining_center_3 = TrainingCenter(id=3, name='Elite Learning Institute')\ntraining_center_4 = TrainingCenter(id=4, name='Skill Builders Center')\n\n# Instructors\ninstructor_1 = Instructor(id=1, name='Alice Smith', email='alice.smith@example.com')\ninstructor_2 = Instructor(id=2, name='Bob Jones', email='bob.jones@example.com')\ninstructor_3 = Instructor(id=3, name='Charlie Brown', email='charlie.brown@example.com')\ninstructor_4 = Instructor(id=4, name='Dana White', email='dana.white@example.com')\n\n# Students\nstudent_1 = Student(id=1, name='John Doe', email='john.doe@example.com', enrollment_date=date(2023, 1, 15))\nstudent_2 = Student(id=2, name='Jane Roe', email='jane.roe@example.com', enrollment_date=date(2023, 2, 20))\nstudent_3 = Student(id=3, name='Alan Smith', email='alan.smith@example.com', enrollment_date=date(2023, 3, 25))\nstudent_4 = Student(id=4, name='Nancy Drew', email='nancy.drew@example.com', enrollment_date=date(2023, 4, 10))\n\n# Courses\ncourse_1 = Course(id=1, name='Python Programming', training_center_id=1, start_date=date(2023, 1, 10), end_date=date(2023, 3, 10), total_hours=60, instructor_id=1)\ncourse_2 = Course(id=2, name='Data Science Fundamentals', training_center_id=2, start_date=date(2023, 2, 5), end_date=date(2023, 4, 5), total_hours=70, instructor_id=2)\ncourse_3 = Course(id=3, name='Web Development', training_center_id=3, start_date=date(2023, 3, 15), end_date=date(2023, 5, 15), total_hours=80, instructor_id=3)\ncourse_4 = Course(id=4, name='Cyber Security', training_center_id=4, start_date=date(2023, 4, 20), end_date=date(2023, 6, 20), total_hours=50, instructor_id=4)\n\n# Enrollments\nenrollment_1 = Enrollment(id=1, student_id=1, course_id=1, enrollment_date=date(2023, 1, 16))\nenrollment_2 = Enrollment(id=2, student_id=2, course_id=2, enrollment_date=date(2023, 2, 22))\nenrollment_3 = Enrollment(id=3, student_id=3, course_id=3, enrollment_date=date(2023, 3, 28))\nenrollment_4 = Enrollment(id=4, student_id=4, course_id=4, enrollment_date=date(2023, 4, 12))\n\n# Rooms\nroom_1 = Room(id=1, name='Room A', capacity=30)\nroom_2 = Room(id=2, name='Room B', capacity=25)\nroom_3 = Room(id=3, name='Room C', capacity=20)\nroom_4 = Room(id=4, name='Room D', capacity=35)\n\n# Schedules\nschedule_1 = Schedule(id=1, course_id=1, room_id=1, scheduled_date=date(2023, 1, 20), start_time=datetime.datetime(2023, 1, 20, 9, 0), end_time=datetime.datetime(2023, 1, 20, 17, 0))\nschedule_2 = Schedule(id=2, course_id=2, room_id=2, scheduled_date=date(2023, 2, 25), start_time=datetime.datetime(2023, 2, 25, 10, 0), end_time=datetime.datetime(2023, 2, 25, 18, 0))\nschedule_3 = Schedule(id=3, course_id=3, room_id=3, scheduled_date=date(2023, 3, 30), start_time=datetime.datetime(2023, 3, 30, 9, 0), end_time=datetime.datetime(2023, 3, 30, 17, 0))\nschedule_4 = Schedule(id=4, course_id=4, room_id=4, scheduled_date=date(2023, 4, 15), start_time=datetime.datetime(2023, 4, 15, 10, 0), end_time=datetime.datetime(2023, 4, 15, 18, 0))\n\n# Feedback\nfeedback_1 = Feedback(id=1, course_id=1, student_id=1, feedback_text='Great course!', feedback_date=date(2023, 3, 11))\nfeedback_2 = Feedback(id=2, course_id=2, student_id=2, feedback_text='Very informative.', feedback_date=date(2023, 4, 6))\nfeedback_3 = Feedback(id=3, course_id=3, student_id=3, feedback_text='Well organized.', feedback_date=date(2023, 5, 16))\nfeedback_4 = Feedback(id=4, course_id=4, student_id=4, feedback_text='Highly recommend.', feedback_date=date(2023, 6, 21))\n\n# Course Materials\ncourse_material_1 = CourseMaterial(id=1, course_id=1, title='Introduction to Python', material_type='PDF', release_date=date(2023, 1, 12))\ncourse_material_2 = CourseMaterial(id=2, course_id=2, title='Data Science Essentials', material_type='Book', release_date=date(2023, 2, 8))\ncourse_material_3 = CourseMaterial(id=3, course_id=3, title='HTML Crash Course', material_type='Video', release_date=date(2023, 3, 18))\ncourse_material_4 = CourseMaterial(id=4, course_id=4, title='Cyber Defense Techniques', material_type='Article', release_date=date(2023, 4, 22))\n\n# Certificates\ncertificate_1 = Certificate(id=1, enrollment_id=1, issue_date=date(2023, 3, 12), certificate_type='Completion')\ncertificate_2 = Certificate(id=2, enrollment_id=2, issue_date=date(2023, 4, 7), certificate_type='Completion')\ncertificate_3 = Certificate(id=3, enrollment_id=3, issue_date=date(2023, 5, 17), certificate_type='Excellence')\ncertificate_4 = Certificate(id=4, enrollment_id=4, issue_date=date(2023, 6, 22), certificate_type='Completion')\n\n# Evaluations\nevaluation_1 = Evaluation(id=1, course_id=1, student_id=1, evaluation_date=date(2023, 3, 13), score=85)\nevaluation_2 = Evaluation(id=2, course_id=2, student_id=2, evaluation_date=date(2023, 4, 8), score=90)\nevaluation_3 = Evaluation(id=3, course_id=3, student_id=3, evaluation_date=date(2023, 5, 18), score=88)\nevaluation_4 = Evaluation(id=4, course_id=4, student_id=4, evaluation_date=date(2023, 6, 23), score=92)",
+    "name": "TrainingCenterWeb"
+}
